@@ -35,6 +35,13 @@ namespace ReactivitiesAPI
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                });
+            });
 
         }
 
@@ -49,9 +56,8 @@ namespace ReactivitiesAPI
             }
 
             //app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
