@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./app/layout/styles.css";
 import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
 import { store, StoreContext } from "./app/stores/store";
 import { BrowserRouter } from "react-router-dom";
+import "react-calendar/dist/Calendar.css";
 
 ReactDOM.render(
   <StoreContext.Provider value={store}>
