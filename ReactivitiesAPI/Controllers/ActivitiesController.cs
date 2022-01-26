@@ -12,6 +12,7 @@ namespace ReactivitiesAPI.Controllers
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetActivities()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
