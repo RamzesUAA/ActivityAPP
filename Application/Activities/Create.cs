@@ -44,7 +44,7 @@ namespace Application.Activities
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                var attendee = new ActivitiyAttendee
+                var attendee = new ActivityAttendee
                 {
                     AppUser = user,
                     Activity = request.Activity,

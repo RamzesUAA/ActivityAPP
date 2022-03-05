@@ -53,7 +53,7 @@ namespace Application.Activities
 
                 if (attendance == null)
                 {
-                    attendance = new Domain.ActivitiyAttendee()
+                    attendance = new Domain.ActivityAttendee()
                     {
                         AppUser = user,
                         Activity = activity,
