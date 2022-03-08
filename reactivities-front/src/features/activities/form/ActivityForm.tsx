@@ -12,7 +12,7 @@ import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { Activity } from "../../../app/models/activity";
+import { Activity, ActivityFormValues } from "../../../app/models/activity";
 
 const ActivityForm = () => {
   const history = useHistory();
@@ -20,15 +20,9 @@ const ActivityForm = () => {
   const { loadActivity, loading, createActivity, updateActivity } =
     activityStore;
   const { id } = useParams<{ id: string }>();
-  const [activity, setActivity] = useState<Activity>({
-    id: "",
-    title: "",
-    category: "",
-    description: "",
-    date: null,
-    city: "",
-    venue: "",
-  });
+  const [activity, setActivity] = useState<ActivityFormValues>(
+    new ActivityFormValues()
+  );
 
   const validationSchema = Yup.object({
     title: Yup.string().required("The activity title is required"),
@@ -40,11 +34,14 @@ const ActivityForm = () => {
   });
 
   useEffect(() => {
-    if (id) loadActivity(id).then((activity) => setActivity(activity!));
+    if (id)
+      loadActivity(id).then((activity) =>
+        setActivity(new ActivityFormValues(activity))
+      );
   }, [id, loadActivity]);
 
-  const handleFormSubmit = (activity: Activity) => {
-    if (activity.id?.length === 0) {
+  const handleFormSubmit = (activity: ActivityFormValues) => {
+    if (!activity.id) {
       let newActivity = {
         ...activity,
         id: uuid(),
@@ -98,11 +95,11 @@ const ActivityForm = () => {
             ></MyDateInput>
             <Header content="Location Details" sub color="teal"></Header>
             <MyTextInput placeholder="City" name="city"></MyTextInput>
-            <MyTextInput placeholder="Vanue" name="venue"></MyTextInput>
+            <MyTextInput placeholder="Venue" name="venue"></MyTextInput>
             <Button
               disabled={isSubmitting || !dirty || !isValid}
               floated="right"
-              loading={loading}
+              loading={isSubmitting}
               positive
               type="submit"
               content="Submit"
