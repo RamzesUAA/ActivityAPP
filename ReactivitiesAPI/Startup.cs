@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using ReactivitiesAPI.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using ReactivitiesAPI.SignalR;
 
 namespace ReactivitiesAPI
 {
@@ -67,6 +68,7 @@ namespace ReactivitiesAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
